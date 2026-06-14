@@ -1,0 +1,36 @@
+{
+  "updatedAt": "2026-06-14",
+  "questions": [
+    {
+      "id": "public-sample-1",
+      "source": "公开示例题库",
+      "type": "multiple",
+      "stem": "毛泽东思想活的灵魂包括哪些基本方面？",
+      "options": [{"key":"A","text":"实事求是"},{"key":"B","text":"群众路线"},{"key":"C","text":"独立自主"},{"key":"D","text":"改革开放"}],
+      "answer": ["A","B","C"],
+      "explanation": "实事求是、群众路线、独立自主是毛泽东思想活的灵魂。",
+      "point": "毛泽东思想活的灵魂"
+    },
+    {
+      "id": "public-sample-2",
+      "source": "公开示例题库",
+      "type": "single",
+      "stem": "近代中国最基本的国情是？",
+      "options": [{"key":"A","text":"封建社会"},{"key":"B","text":"半殖民地半封建社会"},{"key":"C","text":"资本主义社会"},{"key":"D","text":"新民主主义社会"}],
+      "answer": ["B"],
+      "explanation": "近代中国逐步沦为半殖民地半封建社会，这是分析近代中国社会问题的基本依据。",
+      "point": "新民主主义革命理论"
+    },
+    {
+      "id": "public-sample-3",
+      "source": "公开示例题库",
+      "type": "single",
+      "stem": "新民主主义革命的首要对象是？",
+      "options": [{"key":"A","text":"封建主义"},{"key":"B","text":"官僚资本主义"},{"key":"C","text":"帝国主义"},{"key":"D","text":"民族资本主义"}],
+      "answer": ["C"],
+      "explanation": "帝国主义是中国人民第一个和最凶恶的敌人，是新民主主义革命的首要对象。",
+      "point": "新民主主义革命理论"
+    }
+  ],
+  "materials": []
+}

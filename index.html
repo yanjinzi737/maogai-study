@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0d6b4f">
+  <meta name="description" content="毛概选择题本地刷题与知识点复习工具">
+  <title>青苗题库 | 毛概刷题</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="主导航">
+      <a class="brand" href="#home" aria-label="青苗题库首页">
+        <span class="brand-mark">青</span>
+        <span><strong>青苗题库</strong><small>毛概复习工作台</small></span>
+      </a>
+
+      <nav class="nav-list">
+        <button class="nav-item active" data-view="home"><span>首页</span><kbd>H</kbd></button>
+        <button class="nav-item" data-view="bank"><span>题库</span><span id="navQuestionCount">0</span></button>
+        <button class="nav-item" data-view="review"><span>错题与收藏</span><span id="navWrongCount">0</span></button>
+        <button class="nav-item" data-view="knowledge"><span>知识点</span><span id="navPointCount">0</span></button>
+      </nav>
+
+      <div class="sidebar-note">
+        <span>公开题库</span>
+        <strong>无需登录即可使用</strong>
+        <p>错题、收藏和笔记只保存在你自己的设备。</p>
+        <button class="text-button contact-jump" data-action="show-contact">联系题库整理者</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="viewEyebrow">复习总览</p>
+          <h1 id="viewTitle">今天也稳稳拿下一组题</h1>
+        </div>
+        <div class="topbar-actions">
+          <button class="button ghost" id="exportButton">导出备份</button>
+          <button class="button primary" data-action="open-import">导入个人题库</button>
+        </div>
+      </header>
+
+      <section class="view active" id="homeView" data-view-panel="home">
+        <div class="hero-grid">
+          <article class="focus-panel">
+            <div class="focus-copy">
+              <span class="section-label">今日任务</span>
+              <h2>先做 <strong id="dailyRemaining">20</strong> 题，再集中看错题。</h2>
+              <p id="homeHint">当前是演示题库。导入你的必考题后，首页会自动换成真实进度。</p>
+            </div>
+            <div class="goal-ring" aria-label="今日答题进度">
+              <svg viewBox="0 0 120 120" role="img" aria-hidden="true">
+                <circle class="ring-track" cx="60" cy="60" r="48"></circle>
+                <circle class="ring-value" id="goalRing" cx="60" cy="60" r="48"></circle>
+              </svg>
+              <div><strong id="todayDone">0</strong><span>/ 20</span></div>
+            </div>
+            <div class="focus-actions">
+              <button class="button primary large" data-practice="random">开始随机练习</button>
+              <button class="button secondary large" data-practice="wrong">只刷错题</button>
+            </div>
+          </article>
+
+          <aside class="exam-note">
+            <span class="section-label">考前策略</span>
+            <blockquote>先稳定正确率，再追求速度。每道错题至少说清楚“错在哪个概念”。</blockquote>
+            <button class="text-button" data-view="knowledge">查看薄弱知识点</button>
+          </aside>
+        </div>
+
+        <div class="stats-strip" aria-label="学习统计">
+          <div><span>题库总量</span><strong id="totalStat">0</strong><small>道题</small></div>
+          <div><span>累计作答</span><strong id="attemptStat">0</strong><small>次</small></div>
+          <div><span>当前正确率</span><strong id="accuracyStat">0%</strong><small>全部记录</small></div>
+          <div><span>待攻克错题</span><strong id="wrongStat">0</strong><small>道题</small></div>
+        </div>
+
+        <div class="section-heading">
+          <div><span class="section-label">快速入口</span><h2>按你现在的状态开始</h2></div>
+        </div>
+        <div class="mode-list">
+          <button class="mode-row" data-practice="all">
+            <span class="mode-index">01</span><span><strong>顺序刷题</strong><small>按题库顺序完整过一遍</small></span><b>开始</b>
+          </button>
+          <button class="mode-row" data-practice="random">
+            <span class="mode-index">02</span><span><strong>随机练习</strong><small>打乱顺序，避免只记位置</small></span><b>开始</b>
+          </button>
+          <button class="mode-row" data-practice="wrong">
+            <span class="mode-index">03</span><span><strong>错题重练</strong><small>只练当前仍未掌握的题</small></span><b>开始</b>
+          </button>
+          <button class="mode-row" data-practice="starred">
+            <span class="mode-index">04</span><span><strong>收藏题目</strong><small>集中复习你主动标记的重点</small></span><b>开始</b>
+          </button>
+        </div>
+        <section class="contact-section" id="contactSection">
+          <div class="contact-copy">
+            <span class="section-label">题库反馈</span>
+            <h2 id="contactTitle">发现错题，欢迎告诉我</h2>
+            <p id="contactText">可以反馈题目错误、答案疑问或补充新的复习资料。</p>
+          </div>
+          <div class="qr-card">
+            <img id="wechatQr" alt="题库整理者微信二维码" hidden>
+            <div class="qr-placeholder" id="qrPlaceholder"><strong>微信二维码</strong><span>等待整理者上传</span></div>
+            <small id="contactOwner">题库整理者</small>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="bankView" data-view-panel="bank">
+        <div class="bank-toolbar">
+          <label class="search-box"><span>搜索</span><input id="bankSearch" type="search" placeholder="题干、选项、知识点或来源"></label>
+          <select id="sourceFilter" aria-label="按来源筛选"><option value="all">全部来源</option></select>
+          <button class="button secondary" data-action="open-import">导入个人文件</button>
+          <button class="button danger-outline" id="clearDataButton">清空本地数据</button>
+        </div>
+        <div class="bank-summary" id="bankSummary"></div>
+        <div class="question-list" id="questionList"></div>
+      </section>
+
+      <section class="view" id="reviewView" data-view-panel="review">
+        <div class="review-tabs" role="tablist">
+          <button class="tab active" data-review-filter="wrong">当前错题 <span id="wrongTabCount">0</span></button>
+          <button class="tab" data-review-filter="starred">收藏题目 <span id="starTabCount">0</span></button>
+          <button class="tab" data-review-filter="notes">我的笔记 <span id="noteTabCount">0</span></button>
+        </div>
+        <div class="review-list" id="reviewList"></div>
+      </section>
+
+      <section class="view" id="knowledgeView" data-view-panel="knowledge">
+        <div class="knowledge-lead">
+          <div>
+            <span class="section-label">由题目和资料自动整理</span>
+            <h2>把错题变成可复习的知识点</h2>
+            <p>知识点卡片来自题库中的“知识点”和“解析”字段。上传普通复习资料后，也可以在下方全文检索。</p>
+          </div>
+          <button class="button primary" id="focusPracticeButton">练习最薄弱知识点</button>
+        </div>
+        <div class="point-grid" id="pointGrid"></div>
+        <div class="materials-section">
+          <div class="section-heading compact">
+            <div><span class="section-label">复习资料库</span><h2>检索已上传资料</h2></div>
+            <button class="text-button" data-action="open-import">添加资料</button>
+          </div>
+          <label class="search-box wide"><span>资料检索</span><input id="materialSearch" type="search" placeholder="输入概念，例如：新民主主义革命"></label>
+          <div id="materialResults" class="material-results"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <section class="practice-screen" id="practiceScreen" aria-hidden="true">
+    <header class="practice-header">
+      <button class="icon-button" id="exitPracticeButton" aria-label="退出练习">返回</button>
+      <div class="practice-progress"><span id="practiceModeLabel">随机练习</span><div><i id="practiceProgressBar"></i></div></div>
+      <span id="practiceCounter">1 / 10</span>
+    </header>
+    <main class="practice-main">
+      <article class="question-card">
+        <div class="question-meta">
+          <span id="questionType">单选题</span>
+          <span id="questionPoint">未标注知识点</span>
+          <button class="star-button" id="starQuestionButton" aria-label="收藏本题">收藏</button>
+        </div>
+        <h2 id="practiceStem"></h2>
+        <div class="option-list" id="practiceOptions"></div>
+        <div class="answer-panel" id="answerPanel" hidden>
+          <div class="answer-status"><strong id="answerStatus"></strong><span id="correctAnswer"></span></div>
+          <p id="answerExplanation"></p>
+          <label>我的笔记<textarea id="questionNote" rows="3" placeholder="写下易混点、记忆口诀或错误原因"></textarea></label>
+        </div>
+        <div class="question-actions">
+          <button class="button secondary" id="skipButton">暂时跳过</button>
+          <button class="button primary" id="submitAnswerButton">提交答案</button>
+          <button class="button primary" id="nextQuestionButton" hidden>下一题</button>
+        </div>
+      </article>
+      <aside class="shortcut-note"><strong>快捷键</strong><span>数字键选择</span><span>Enter 提交或下一题</span></aside>
+    </main>
+  </section>
+
+  <dialog class="import-dialog" id="importDialog">
+    <form method="dialog" class="dialog-frame">
+      <header><div><span class="section-label">个人导入</span><h2>添加自己的题库或资料</h2></div><button class="icon-button" value="cancel" aria-label="关闭">关闭</button></header>
+      <div class="drop-zone" id="dropZone" tabindex="0">
+        <strong>把文件拖到这里</strong>
+        <p>支持 DOCX、PDF、TXT、Markdown 和 JSON，可一次选择多个文件。</p>
+        <label class="button secondary">选择文件<input id="fileInput" type="file" multiple accept=".docx,.pdf,.txt,.md,.json" hidden></label>
+      </div>
+      <div class="or-divider"><span>或者粘贴题库文本</span></div>
+      <textarea id="pasteInput" rows="8" placeholder="示例：&#10;1. 毛泽东思想活的灵魂包括哪些内容？&#10;A. 实事求是&#10;B. 群众路线&#10;C. 独立自主&#10;D. 改革创新&#10;答案：ABC&#10;解析：……&#10;知识点：毛泽东思想活的灵魂"></textarea>
+      <div class="format-hint">支持选项分行或挤在同一行、Word 表格、答案为 A、【答案】A、题干括号标答案等格式。扫描版 PDF 需先做 OCR。</div>
+      <div id="importFeedback" class="import-feedback" hidden></div>
+      <footer><button class="button ghost" value="cancel">取消</button><button class="button primary" id="parsePasteButton" value="none">解析并导入</button></footer>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
