@@ -1,5 +1,5 @@
 const STORAGE_KEY = "qingmiao-maogai-v1";
-const SITE_VERSION = "20260614-2";
+const SITE_VERSION = "20260615-1";
 const todayKey = () => new Date().toISOString().slice(0, 10);
 const uid = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 9)}`;
 
