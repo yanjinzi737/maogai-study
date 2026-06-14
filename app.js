@@ -1,8 +1,5 @@
-import * as pdfjsLib from "./vendor/pdf.min.mjs";
-
-pdfjsLib.GlobalWorkerOptions.workerSrc = "./vendor/pdf.worker.min.mjs";
-
 const STORAGE_KEY = "qingmiao-maogai-v1";
+const SITE_VERSION = "20260614-2";
 const todayKey = () => new Date().toISOString().slice(0, 10);
 const uid = () => `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 9)}`;
 
@@ -585,6 +582,8 @@ async function extractDocx(file) {
 }
 
 async function extractPdf(file) {
+  const pdfjsLib = await import("./vendor/pdf.min.mjs");
+  pdfjsLib.GlobalWorkerOptions.workerSrc = new URL("./vendor/pdf.worker.min.mjs", document.baseURI).href;
   const pdf = await pdfjsLib.getDocument({data: new Uint8Array(await file.arrayBuffer())}).promise;
   const pages = [];
   for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
@@ -799,8 +798,8 @@ document.addEventListener("keydown", event => {
 async function loadPublicSite() {
   try {
     const [bankResponse, configResponse] = await Promise.all([
-      fetch("./data/question-bank.json", {cache: "no-cache"}),
-      fetch("./data/site-config.json", {cache: "no-cache"})
+      fetch(`./data/question-bank.json?v=${SITE_VERSION}`, {cache: "no-store"}),
+      fetch(`./data/site-config.json?v=${SITE_VERSION}`, {cache: "no-store"})
     ]);
     if (bankResponse.ok) {
       const bank = await bankResponse.json();
